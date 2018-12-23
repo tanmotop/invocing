@@ -21,6 +21,7 @@ class CreateOrderItemsTable extends Migration
             $table->unsignedInteger('quantity')->comment('数量');
             $table->decimal('unit_price')->comment('单价');
             $table->decimal('total_price')->comment('总价');
+            $table->decimal('paid_price')->comment('实收价格');
             $table->timestamps();
         });
     }

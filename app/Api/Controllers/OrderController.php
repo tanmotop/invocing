@@ -29,6 +29,7 @@ class OrderController extends Controller
 
     public function store(Request $request)
     {
+        $paid_price = $request->paid_price;
         $buyer = $request->buyer;
         $remark = $request->remark;
 
@@ -75,6 +76,7 @@ class OrderController extends Controller
         $order = new Order();
         $order->sn = 'SN' . date('YmdHis');
         $order->total_price = $total;
+        $order->paid_price = $paid_price;
         $order->buyer = $buyer;
         $order->remark = $remark;
         $order->save();
