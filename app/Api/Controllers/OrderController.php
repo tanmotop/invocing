@@ -43,6 +43,7 @@ class OrderController extends Controller
         foreach ($buyItems as $buyItem) {
             $quantity = $buyItem['quantity'];
             $item = $items[$buyItem['item_id']];
+            $stock = $item->stock;
             $priceType = $buyItem['price_type'];
             switch ($priceType) {
                 case 'member_price':
@@ -69,7 +70,7 @@ class OrderController extends Controller
                 'total_price' => $price
             ]);
 
-            $item->stock -= $quantity;
+            $item->stock = $stock - $quantity;
             $item->save();
         }
 
