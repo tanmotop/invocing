@@ -37,20 +37,20 @@ class OrderController extends Controller
         $items = Item::fetchItems($itemIds)->get();
         $items = $items->keyBy('id')->all();
 
-        $byItems = $request->input('items');
+        $buyItems = $request->input('items');
         $total = 0;
         $itemList = [];
-        foreach ($byItems as $byItem) {
-            $quantity = $byItem['quantity'];
-            $item = $items[$byItem['item_id']];
-            $priceType = $byItem['price_type'];
+        foreach ($buyItems as $buyItem) {
+            $quantity = $buyItem['quantity'];
+            $item = $items[$buyItem['item_id']];
+            $priceType = $buyItem['price_type'];
             switch ($priceType) {
                 case 'member_price':
                 case 'retail_price':
                     $unitPrice = $item->$priceType;
                     break;
                 case 'other':
-                    $unitPrice = $byItem['unit_price'];
+                    $unitPrice = $buyItem['unit_price'];
                     break;
                 case 'free':
                 case 'personal':
@@ -62,7 +62,7 @@ class OrderController extends Controller
             $total += $price;
 
             $itemList[] = new OrderItem([
-                'item_id' => $byItem['item_id'],
+                'item_id' => $buyItem['item_id'],
                 'quantity' => $quantity,
                 'price_type' => OrderItem::$priceTypeMap[$priceType],
                 'unit_price' => $unitPrice,
